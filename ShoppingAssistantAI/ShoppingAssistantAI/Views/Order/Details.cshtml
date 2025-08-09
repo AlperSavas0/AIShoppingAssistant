@@ -1,0 +1,39 @@
+﻿@model ShoppingAssistantAI.Models.Entities.Order
+
+@{
+    ViewData["Title"] = "Sipariş Detayı";
+}
+
+<h2>Sipariş Detayı</h2>
+<p><strong>Sipariş Tarihi:</strong> @Model.CreatedDate.ToShortDateString()</p>
+
+@if (!Model.OrderDetails.Any())
+{
+        <p>Bu siparişte ürün bulunmamaktadır.</p>
+}
+else
+{
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Ürün</th>
+                    <th>Adet</th>
+                    <th>Birim Fiyat</th>
+                    <th>Toplam</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.OrderDetails)
+            {
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Amount</td>
+                            <td>@item.UnitPrice ₺</td>
+                            <td>@(item.Amount * item.UnitPrice) ₺</td>
+                        </tr>
+            }
+            </tbody>
+        </table>
+}
+
+<a asp-action="Index" class="btn btn-secondary">← Tüm Siparişler</a>

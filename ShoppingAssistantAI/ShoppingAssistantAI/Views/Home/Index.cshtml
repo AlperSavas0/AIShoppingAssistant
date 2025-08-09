@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "AI Chat";
+}
+
+<div class="container py-5" style="max-width: 700px;">
+    <div class="d-flex flex-column align-items-center">
+        <!-- Bot Profili -->
+        <div class="mb-3 text-center">
+            <img src="https://via.placeholder.com/80x80.png?text=🤖" class="rounded-circle border" />
+            <h2 class="mt-2 fw-bold">Alışveriş Asistanı</h2>
+            <p class="text-muted">Sana ürün bulmak ve geçmiş siparişlerini hatırlamak için buradayım ✨</p>
+        </div>
+
+        <!-- Chat Balonu (Simülasyon) -->
+        <div class="w-100 mb-4">
+            <div class="bg-light p-3 rounded shadow-sm">
+                <p class="mb-0">
+                    👋 Merhaba! Size nasıl yardımcı olabilirim?<br />
+                    
+                </p>
+            </div>
+        </div>
+
+        <!-- Mesaj Gönderme Formu -->
+        <form asp-controller="Product" asp-action="ChatSearch" method="get" class="w-100">
+            <div class="input-group input-group-lg shadow-sm">
+                <input type="text" name="message" class="form-control" placeholder="Mesajınızı yazın..." required />
+                <button class="btn btn-primary" type="submit">Gönder</button>
+            </div>
+        </form>
+    </div>
+</div>

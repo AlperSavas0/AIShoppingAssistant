@@ -1,0 +1,51 @@
+﻿@model List<ShoppingAssistantAI.Models.Entities.Product>
+
+@{
+    ViewBag.Title = "Ürün Sonuçları";
+}
+
+<div class="container my-4">
+    <h2 class="mb-4">🛒 Ürün Sonuçları</h2>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+
+    @if (ViewBag.RawTags != null)
+    {
+        <div class="alert alert-secondary mb-3">
+            <strong>AI Tags:</strong> @ViewBag.RawTags <br />
+            <strong>AI Categories:</strong> @ViewBag.RawCategories
+        </div>
+    }
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning">Hiç ürün bulunamadı.</div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://via.placeholder.com/300x200?text=@item.Name" class="card-img-top" alt="@item.Name" />
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+                            <p class="card-text">
+                                <strong>Kategori:</strong> @item.Category <br />
+                                <strong>Fiyat:</strong> @item.Price ₺ <br />
+                                <strong>Etiketler:</strong> @item.Tags
+                            </p>
+                        </div>
+                        <div class="card-footer text-end">
+                            <a href="@Url.Action("Details", "Product", new { id = item.ID })" class="btn btn-sm btn-outline-primary">Detaylar</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

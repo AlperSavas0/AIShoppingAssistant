@@ -1,0 +1,78 @@
+﻿@model List<ShoppingAssistantAI.Models.Entities.Product>
+
+@{
+    ViewData["Title"] = "Ürünler";
+}
+
+<div class="container my-5">
+
+    <h2 class="mb-4">🛍️ Ürün Listesi</h2>
+
+    <!-- Arama Formu -->
+    <form method="get" asp-controller="Product" asp-action="Index" class="mb-4">
+        <div class="input-group" style="max-width: 400px;">
+            <input type="text" name="tag" value="@ViewBag.CurrentTag" class="form-control" placeholder="Etiketle ara...">
+            <button type="submit" class="btn btn-primary">Ara</button>
+        </div>
+    </form>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">Ürün bulunamadı.</div>
+    }
+    else
+    {
+        <!-- Ürün Kartları -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            @foreach (var product in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="https://via.placeholder.com/400x250.png?text=@product.Category" class="card-img-top" alt="@product.Name">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="card-title">@product.Name</h5>
+                                <p class="card-text small text-muted mb-2">@product.Category</p>
+                                <p class="mb-1"><strong>Etiketler:</strong> @product.Tags</p>
+                                <p><strong>Fiyat:</strong> @product.Price ₺</p>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between bg-white border-top-0">
+                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.ID" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-info-circle"></i> Detay
+                            </a>
+                            <button onclick="showToast('@product.Name')" class="btn btn-sm btn-success">
+                                <i class="fas fa-cart-plus"></i> Sepete Ekle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</div>
+
+<!-- Toast Script -->
+<script>
+    function showToast(name) {
+        const toast = document.getElementById("toast");
+        toast.innerText = `${name} sepete eklendi!`;
+        toast.style.display = "block";
+        setTimeout(() => toast.style.display = "none", 2000);
+    }
+</script>
+
+<!-- Ortak Toast Kutusu -->
+<div id="toast"
+     style="position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+            z-index: 9999;">
+</div>

@@ -1,0 +1,48 @@
+﻿@model List<ShoppingAssistantAI.Models.Entities.Order>
+
+@{
+    ViewData["Title"] = "Geçmiş Siparişler";
+}
+
+<h2>Geçmiş Siparişler</h2>
+
+@if (!Model.Any())
+{
+    <p>Henüz siparişiniz bulunmamaktadır.</p>
+}
+else
+{
+    foreach (var order in Model)
+    {
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <a asp-action="Details" asp-route-id="@order.ID">
+                    <strong>Sipariş Tarihi:</strong> @order.CreatedDate.ToShortDateString()
+                </a>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Ürün</th>
+                            <th>Adet</th>
+                            <th>Birim Fiyat</th>
+                            <th>Toplam</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in order.OrderDetails)
+                        {
+                            <tr>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Amount</td>
+                                <td>@item.UnitPrice ₺</td>
+                                <td>@(item.Amount * item.UnitPrice) ₺</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
